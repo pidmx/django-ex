@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-tipodevehiculo{% endblock %}
+
+{% block content %}
+<!--<div class="row">
+    <div class="col s12 m4 l4 left-align card-panel grey lighten-2"></div>
+    <div class="col s12 m4 l4 center-align card-panel waves-effect waves-red">
+        <h5>{{ page.title }}</h5>
+    </div>
+    <div class="col s12 m4 l4 right-align card-panel grey lighten-2"></div>
+</div>
+
+<div class="row">
+    <div class="col s10 m10 l10">
+        {{ page.intro|richtext }}
+    </div>
+    <div class="col s2 m2 l2 right-align">
+        <a class="btn waves-effect grey z-depth-5" href="{{ page.get_parent.url }}"><i class="material-icons left">arrow_back</i></a>
+    </div>
+</div>
+
+<div class="row center-cols center-align">
+{% for moto in motopages %}
+    {% with moto=moto.specific %}
+    <div class="col s12 m6 l3">
+        <div class="card z-depth-2 hoverable">
+            <div class="card-content"><a href="{% pageurl moto %}" class="white-text">
+                {% with moto.imagen_principal as main_image %}
+                    {% if main_image %}{% image main_image height-120 %}{% endif %}
+                {% endwith %}</a>
+            </div>
+            <span class="card-title"></span>
+            <div class="card-action">
+                <a href="{% pageurl moto %}" class="grey-text">{{ moto.title }}</a>
+            </div>
+        </div>
+    </div>
+    {% endwith %}
+{% endfor %}
+</div>-->
+    
+{% endblock %}

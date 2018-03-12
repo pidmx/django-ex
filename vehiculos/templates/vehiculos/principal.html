@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block body_class %}template-principal{% endblock %}
+
+{% block content %}
+
+{% if self.get_descendants.live.in_menu.specific %}
+<div class="carousel carousel-slider center" data-indicators="true" >
+	{% for promo in self.get_descendants.live.in_menu.specific %}
+    <div class="carousel-item" href="#one!">
+        <h2>{{promo.title}}</h2>
+    	<a href="{% pageurl promo %}">{% image promo.imagen_principal original class="responsive-img" %}</a>
+    </div>
+	{% endfor %}
+</div>
+{% endif %}
+
+<div class="row center-align">
+	{% for tipos in self.get_children.specific %}
+	<div class="col s6 m3 l3">
+		<div class="card">
+			<div class="card-image waves-effect waves-block waves-light">
+				{% image tipos.icono width-250 as icon %}
+				<img class="activator" src="{{ icon.url }}" width="100%" />
+			</div>
+    		<div class="card-content">
+    			<span class="card-title activator grey-text text-darken-4 waves-effect">{{tipos.title}}<i class="material-icons right">more_vert</i></span>
+    		</div>
+    		<div class="card-reveal">
+      			<span class="card-title grey-text text-darken-4"><b>{{tipos.title}}</b><i class="material-icons right">close</i></span>
+      			<p>{% for lista in tipos.get_children %}
+      			<p><a href="{% pageurl lista %}" class="waves-effect btn grey">{{lista.title}}</a></p>
+      			{% endfor %}</p>
+    		</div>
+  		</div>
+ 	</div>
+ 	{% endfor %}
+	
+	{{ page.body|richtext }}
+	
+</div>
+
+{% endblock %}

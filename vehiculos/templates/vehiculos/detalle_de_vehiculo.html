@@ -1,0 +1,230 @@
+﻿{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block body_class %}template-detalledevehiculo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m4 l4 left-align card-panel grey lighten-2 waves-effect">
+        <h5>{{ page.get_parent.title }}<br>{{ page.title }}</h5>
+    </div>
+    <div class="col s12 m4 l4 center-align card-panel waves-effect waves-red">
+        <h5>Precio Base</h5>
+        {% if page.precio %}
+        <p><span class="pesos">$</span><span class="odometer">999999.99</span></p>
+        {% endif %}
+    </div>
+    <div class="col s12 m4 l4 right-align card-panel grey lighten-2 waves-effect">
+        <br>{% image page.logo width-200 %}
+    </div>
+</div>
+    
+<div class="row">
+    <div class="col s12 m10 l10 center-align">
+        <div class="relativo">
+            {% image page.imagen_principal height-480 class="responsive-img colores" %}
+            {% for extra in page.mounted_images.all %}
+            <a class="scale-out scale-transition montados" id="mounted_image{{ forloop.counter }}">
+                {% image extra.imagen height-480 class="responsive-img" %}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col s2 m2 l2 right-align">
+        <a class="btn waves-effect grey z-depth-5" href="{{ page.get_parent.url }}"><i class="material-icons left">arrow_back</i></a>
+    </div>
+
+    <div class="col s12 m2 l2">
+        {% if page.sku %}
+            <br>
+            <div class="row grey center-align white-text">SKU: {{ page.sku }}</div>
+        {% endif %}
+   
+        {% if page.mounted_images.all %} 
+        <form action="#">
+        <br>
+        <div class="row grey center-align white-text">Accesorios</div>
+            {% for item in page.mounted_images.all %}
+                <p class="center-align">
+                <input type="checkbox" id="mounted_{{ forloop.counter }}" class="negro montado z-depth-5" attr-precio="{{ item.precio }}" />
+                <label for="mounted_{{ forloop.counter }}">{% image item.miniatura height-25 class="responsive-img z-depth-1 " %}</label>
+                </p>
+            {% endfor %}
+        </form>
+        {% endif %}
+        {% if page.gallery_images.all %} 
+        <form action="#">
+        <br>
+        <div class="row grey center-align white-text">Colores</div>
+            {% for color in page.gallery_images.all %}
+                {% image color.imagen height-480 as color_v %}
+                <p class="center-align">
+                <input class="with-gap rnegro" name="colors" type="radio" id="color_{{ forloop.counter }}" onchange="cambiacolor('{{ color_v.url }}')" />
+                <label for="color_{{ forloop.counter }}"><!--{% image color.miniatura height-25 class="responsive-img z-depth-1 " %}--><span class="chip">{{color.color}}</span></label>
+                </p>
+            {% endfor %}
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Especificaciones -->
+<div class="row">
+    <div class="col s12 m10 l10 card grey lighten-2 waves-effect">
+    {% if page.especificaciones %}
+        <span class="card-title">Especificaciones Técnicas</span>
+        {{ page.especificaciones|richtext }}
+    {% endif %}
+    </div>
+    
+    <div class="col s12 m2 l2 center-align ">
+    {% if page.extra_images.all %}
+        <div><a class="waves-effect btn-large grey z-depth-5 modal-trigger" href="#accesorios">Extras</a></div>
+    {% endif %}
+        <br /><br />
+    {% if page.cotizacion %}
+        <div><a class="waves-effect btn-large grey z-depth-5 sol-cotizacion" href="#cotizacion" id="sol-cotizacion">Cotización</a></div>
+    {% endif %}
+    </div>
+</div>
+  
+<!-- Galeria de accesorios -->
+<div id="accesorios" class="modal">
+    <div class="modal-content">
+        <h4>Accesorios extra para su {{ page.title }}</h4>
+        <div class="slider">
+            <ul class="slides">
+                {% for item in page.extra_images.all %}
+                <li>
+                    {% image item.imagen height-150 class="" %}
+                    <div class="caption center-align" href="#">
+                        <h4>{{ item.descripcion }}</h4>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect btn-flat">Cerrar</a>
+    </div>
+</div>
+
+<!-- Cotizacion -->
+<div id="cotizacion" class="modal bottom-sheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(){
+            $('.preloader-background').delay(1000).fadeOut('fast');
+            
+            $('.preloader-wrapper')
+              .delay(1000)
+              .fadeOut('fast');
+          });
+    </script>
+    <div class="preloader-background">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-content">
+        <iframe height=40 width=450  allowTransparency=true scrolling=no marginwidth=0 marginheight=0 frameborder=0 vspace=0 hspace=0 name="form_submit1"></iframe>
+        <form name="my_form" method="post" action="http://www.instantcustomer.com/s/index.php" target="form_submit1" onsubmit="document.location.href='#iframe_msg'" class="well form-horizontal">
+            <table  width="100%" border="0" cellpadding="0" cellspacing="6" style="font-family: sans-serif; background-color: whitesmoke;">
+                <tr>
+                    <td colspan="2" align="center"><b>Solicitud de Cotización {{page.title}}</b></td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td class="form_left"><b>Nombre</b><span class="bold_red">*</td>
+                    <td><input type="text" id="f_u_firstname" name="u_firstname" placeholder="Su nombre (requerido)" value="" class='required validate' /></td>
+                </tr>
+                <tr>
+                    <td class="form_left"><b>Apellido</b><span class="bold_red">*</td>
+                    <td><input type="text" id="f_u_lastname" name="u_lastname" placeholder="Su apellido (requerido)" value="" class='required validate' /></td>
+                </tr>
+                <tr>
+                    <td class="form_left"><b>Email</b><span class="bold_red">*</span></td>
+                    <td><input type="email" id="f_u_email" name="u_email" placeholder="Su email (requerido)" value="" class='required validate' /></td>
+                </tr>
+                <tr>
+                    <td class="form_left"><b>Tel&eacute;fono</b><span class="bold_red">*</span></td>
+                    <td><input type="text" id="f_u_phone" name="u_phone" placeholder="Su n&uacute;mero (requerido)" value="" class='required validate' /></td>
+                </tr>
+                <tr>
+                    <td colspan=2 align=center class=save>
+                        <input type="hidden" name="req" value="save_seminar_info">
+                        <input type="hidden" name="u_series_id" value="{{ page.cotizacion }}">
+                        <input type="hidden" name="thank_you" value="1">
+                        <input type="hidden" name="u_timezone_js_offset" value="">
+                        <input type="submit" value="Enviar" onclick="var r = document.getElementsByClassName('required'); var bool = true; for(var i=0; i<r.length; i++) { if(r[i].value == '') bool=false; } if(!bool) {alert('Debe llenar todos los campos requeridos!!');} else if(document.getElementById('sms-check')){ if(!document.getElementById('sms-check').checked){ alert('Please agree to the SMS Terms of Service before continuing.'); bool=false; } }                      if (document.getElementById('f_u_email')) { if(!validateEmail(document.getElementById('f_u_email').value)){ alert('Ingrese una direcci&oacute;n de email v&aacute;lida.'); bool = false; } }return bool;"></r>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Su información no será compartida o vendida.</td>
+                </tr>
+            </table>
+            <script type="text/javascript"> function validateEmail(email) { return /^.+@.+\..{2,}$/.test(email); } </script>
+        </form>
+    </div>
+</div>
+
+    {% block extra_js %}
+    {# Override this in templates to add extra javascript #}
+        <script type="text/javascript">
+            window.odometerOptions = {
+                format: '(,ddd).dd', 
+                duration: 2000,
+                theme: 'minimal',
+            };
+        </script>
+        <script type="text/javascript">
+            function cambiacolor(color){
+                $('.colores').attr('src', color);
+            }
+        </script>
+        <script type="text/javascript">
+        $(function() {
+            var total = parseFloat({{ page.precio }});
+            $(".montado").on( 'change', function() {
+                if( $(this).is(':checked') ) {
+                    total = total + parseFloat($(this).attr('attr-precio'));
+                    $('.odometer').html(total);
+                    var iable = $(this).attr('id').match(/\d+$/)
+                    $('#mounted_image'+iable).toggleClass('scale-out');
+                } else {
+                    total = total - parseFloat($(this).attr('attr-precio'));
+                    $('.odometer').html(total);
+                    var iable = $(this).attr('id').match(/\d+$/)
+                    $('#mounted_image'+iable).toggleClass('scale-out');
+                }
+            });
+            $('.odometer').html(total);
+        function nWin() {
+            var w = window.open('','','width=500, height=650, resizable=no, titlebar=no, menubar=no');
+            var html = $("#cotizacion").html();
+
+            $(w.document.body).html(html);
+        };
+
+        $(function() {
+            $("a#sol-cotizacion").click(nWin);
+        });
+        });
+        </script>
+    {% endblock %}
+
+{% endblock %}

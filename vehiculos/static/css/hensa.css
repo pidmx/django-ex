@@ -1,0 +1,117 @@
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/materialicons/MaterialIcons-Regular.woff2) format('woff2');
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently supported by any browser but < IE9 */
+}
+
+.container {
+    flex: 1 0 auto;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -moz-font-feature-settings: 'liga';
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wagtail-icon:before {
+    content: "a";
+    font-family:wagtail;
+}
+
+.center-cols > .col {
+  float:none; /* disable the float */
+  display: inline-block; /* make blocks inline-block */
+}
+
+.slider .indicators .indicator-item.active {
+	background-color: #000000;
+}
+
+.relativo {
+    position: relative;
+}
+
+.montados {
+	position: absolute; 
+	display: inline-block;
+	left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+	z-index: 0;
+}
+.odometer {
+	font-size: xx-large;
+}
+.pesos {
+	font-size: x-large;
+}
+
+.negro[type="checkbox"]:checked + label:before {
+    top: -4px;
+    left: -5px;
+    width: 12px;
+    height: 22px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-right: 2px solid #5a5a5a;
+    border-bottom: 2px solid #5a5a5a;
+    -webkit-transform: rotate(40deg);
+    transform: rotate(40deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-origin: 100% 100%;
+    transform-origin: 100% 100%;
+}
+
+.rnegro[type="radio"].with-gap:checked+label:after {
+  background-color: #5a5a5a;
+}
+
+.rnegro[type="radio"].with-gap:checked+label:before {
+  border: 2px solid #5a5a5a;
+}
+
+.spinner-layer .circle-clipper {
+  border-color: black;
+}
+
+.preloader-background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5e5e5;
+  
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;  
+}

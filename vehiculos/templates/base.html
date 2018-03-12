@@ -1,0 +1,95 @@
+{% load static wagtailuserbar %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {# Global stylesheets #}
+
+        <!--Import materialize.css-->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/materialize.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/odometer-theme-minimal.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/hensa.css' %}">
+
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="{% block body_class %}{% endblock %} grey lighten-4">
+        <div class="preloader-background">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% wagtailuserbar %}
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper black">
+                    <a href="/" class="brand-logo center"><i class="material-icons">whatshot</i>
+                    <span class="hide-on-small-only">
+                        {% with self.get_site.site_name as site_name %}
+                            {% if site_name %}{{ site_name }}{% endif %}
+                        {% endwith %}
+                    </span></a> 
+                </div>
+            </nav>
+        </div>
+       
+        <div class="container white z-depth-5">
+
+        {% block content %}{% endblock %}
+
+        </div>
+
+        <footer class="page-footer black">
+            <div class="footer-copyright">
+                <div class="container">
+                    © Hensa Distribuciones S.A. de C.V.
+                </div>
+            </div>
+        </footer>
+
+        {# Global javascript #}
+        <script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/hensa.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/odometer.min.js' %}"></script>
+        
+
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+
+            
+        {% endblock %}
+    </body>
+    
+</html>
